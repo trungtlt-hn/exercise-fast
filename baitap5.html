@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Common Elements in Strings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #254180;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tìm kiếm kí tự trùng lặp trong chuỗi</h1>
+  <input type="text" id="input1" placeholder="Enter string 1">
+  <input type="text" id="input2" placeholder="Enter string 2">
+  <button onclick="findCommonElements()">Find</button>
+  <pre id="output"></pre>
+
+  <script>
+    function findCommonElements() {
+      const a1 = document.getElementById('input1').value;
+      const a2 = document.getElementById('input2').value;
+
+      // Tạo object để lưu trữ số lần xuất hiện của từng ký tự
+      const charCount1 = {};
+      const charCount2 = {};
+
+      // Đếm số lần xuất hiện của từng ký tự trong chuỗi a1 và a2
+      for (let char of a1) {
+        charCount1[char] = (charCount1[char] || 0) + 1;
+      }
+      for (let char of a2) {
+        charCount2[char] = (charCount2[char] || 0) + 1;
+      }
+
+      // Tìm các ký tự chung và số lần xuất hiện
+      const commonChars = [];
+      for (let char in charCount1) {
+        if (charCount2[char]) {
+          commonChars.push([char, charCount1[char] + charCount2[char]]);
+        }
+      }
+
+      // Sắp xếp các ký tự theo số lần xuất hiện giảm dần
+      commonChars.sort((a, b) => b[1] - a[1]);
+
+      // Lấy ký tự xuất hiện nhiều nhất và thứ hai
+      const mostCommonChar = commonChars[0][0];
+      const secondMostCommonChar = commonChars[1]?.[0] || 'None';
+
+      // Tính tổng số lần xuất hiện của ký tự xuất hiện nhiều nhất
+      const mostCommonCount = commonChars[0][1];
+
+      // Hiển thị kết quả
+      const output = `
+Ký tự xuất hiện nhiều nhất: ${mostCommonChar}
+Tổng số lần xuất hiện: ${mostCommonCount}
+Ký tự xuất hiện nhiều thứ hai: ${secondMostCommonChar}
+`;
+
+      document.getElementById('output').textContent = output;
+    }
+  </script>
+</body>
+</html>

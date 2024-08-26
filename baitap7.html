@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Name Generator</title>
+</head>
+<body>
+    <h1>Generated Full Names</h1>
+    <div id="output"></div>
+
+    <script>
+        // Định nghĩa các mảng
+        const A1 = ["A.Hung", "A.Tien", "Le", "Nguyen", "B.Ngoc"];
+        const A2 = ["Vu", "Duong", "Tran", "C.Hai", "D.Loan"];
+
+        // Hàm để tạo tên đầy đủ không trùng lặp
+        function generateFullNames(firstNames, lastNames) {
+            const fullNames = [];
+            const usedNames = new Set(); // Sử dụng Set để đảm bảo tên không bị trùng
+
+            // Lọc firstname chỉ lấy các tên có dấu chấm
+            const validFirstNames = firstNames.filter(name => name.includes('.'));
+
+            for (let i = 0; i < lastNames.length; i++) {
+                for (let j = 0; j < validFirstNames.length; j++) {
+                    const lastName = lastNames[i];
+                    const firstName = validFirstNames[j];
+                    const fullName = `${lastName} ${firstName}`;
+
+                    if (!usedNames.has(fullName)) {
+                        usedNames.add(fullName);
+                        fullNames.push(fullName);
+                    }
+
+                    if (fullNames.length >= 5) {
+                        return fullNames; // Trả về khi đã đủ 5 tên
+                    }
+                }
+            }
+
+            return fullNames; // Trả về tất cả các tên nếu không đủ 5 tên
+        }
+
+        // Tạo và hiển thị tên đầy đủ
+        const fullNames = generateFullNames(A1, A2);
+        const outputDiv = document.getElementById("output");
+
+        outputDiv.innerHTML = fullNames.join(', ');
+    </script>
+</body>
+</html>
